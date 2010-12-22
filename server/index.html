@@ -1,0 +1,59 @@
+
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+    <meta charset="utf-8"> 
+    <title>comu</title> 
+    <!-- dant.org maps key -->
+    <!-- 
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAMCzdTHZC13j0zfxf1TJJWBSKgaE1xlP9_iFOZS22fbkCZmN-xxT8MqtlJl-OdNqxQOP0Md8ebtOuMg"></script> 
+    -->
+    <!-- localhost maps key -->
+    <script src="http://maps.google.com/maps?file=api&amp;v=2&amp;sensor=false&amp;key=ABQIAAAAMCzdTHZC13j0zfxf1TJJWBT2yXp_ZAY8_ufC3CFXhHIE1NvwkxTDVOrTEWF-dZegIXfJ2l2nbC5JQg" type="text/javascript"></script>     
+    <!--[if IE]><script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]--> 
+    <script> 
+        // Initialise and load Google maps
+        var map = null;
+        function loadMap() {
+            map = new GMap2(document.getElementById("map"));
+            map.setCenter(new GLatLng(52.2021, 0.1346 ), 12); // (sets the map centre to Cambridge UK)
+            map.setUIToDefault();
+              var marker = new google.maps.Marker({ position: latlng, map: map, title:"You are here!" });
+
+        }
+        
+        // If this browser supports Geolocation, then attempt to obtain the user's location
+        if (navigator.geolocation) {
+            var timeoutVal = 10 * 1000 * 1000;
+            navigator.geolocation.getCurrentPosition(showPositionOnMap, errorMessage,{ enableHighAccuracy: false, timeout: timeoutVal, maximumAge: 0});
+        }
+        // Geolocation is not supported, inform the user
+        else {
+            alert("Geolocation is not supported by this browser");
+        }
+        
+        // Success! Set a marker on the Google map to show the user's location
+        function showPositionOnMap(position) {
+            var geoCoords = new GLatLng(position.coords.latitude, position.coords.longitude);
+            map.addOverlay(new GMarker(geoCoords));
+        }
+        
+        // Boo! Couldn't obtain the user's location. Translate the error code into something useful and inform the user.        
+        function errorMessage(error) {
+            var errors = { 
+                1: 'Permission denied',
+                2: 'Position unavailable',
+                3: 'Request timeout'
+            };
+            alert("Error: " + errors[error.code]);
+        }
+    </script> 
+</head> 
+<body onload="loadMap()" onunload="GUnload()"> 
+    <header> 
+        <h1>ucom</h1> 
+    </header> 
+    <!-- Holder for the Google map --> 
+    <div id="map" style="width:640px;height:480px;"></div> 
+</body> 
+</html>
